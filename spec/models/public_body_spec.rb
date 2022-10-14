@@ -230,6 +230,31 @@ RSpec.describe PublicBody do
         expect(public_body).not_to be_tagged('missing_email')
       end
     end
+
+    context 'when there are not many public requests' do
+      let!(:public_body) { FactoryBot.create(:public_body) }
+
+      it 'adds the not many requests tag' do
+        subject
+        expect(public_body).to be_tagged('not_many_requests')
+      end
+    end
+
+    context 'when a request email is removed' do
+      let!(:public_body) { FactoryBot.create(:public_body) }
+
+      # Reduce size for test so we have to create fewer records
+      before { public_body.not_many_public_requests_size = 2 }
+
+      before do
+        FactoryBot.create_list(:info_request, 2, public_body: public_body)
+      end
+
+      it 'removes the not many requests tag' do
+        subject
+        expect(public_body).not_to be_tagged('not_many_requests')
+      end
+    end
   end
 
   describe '#name' do
@@ -979,8 +1004,7 @@ RSpec.describe PublicBody do
 
   end
 
-  describe 'when generating json for the api' do
-
+  describe 'when generating json for the api', not_many_requests_tag: false do
     let(:public_body) do
       FactoryBot.create(:public_body,
                         :name => 'Marmot Appreciation Society',
@@ -1344,7 +1368,7 @@ RSpec.describe PublicBody, "when destroying" do
 
 end
 
-RSpec.describe PublicBody, " when loading CSV files" do
+RSpec.describe PublicBody, " when loading CSV files", not_many_requests_tag: false do
   before(:each) do
     # InternalBody is created the first time it's accessed, which happens sometimes during imports,
     # depending on the tag used. By accessing it here before every test, it doesn't disturb our checks later on
@@ -2353,6 +2377,36 @@ RSpec.describe PublicBody do
 
       expect { public_body.update_counter_cache }.
         to change { public_body.info_requests_visible_count }.from(1).to(0)
+    end
+  end
+
+  describe '#request_created' do
+    subject { public_body.request_created }
+
+    context 'when there are not many public requests' do
+      let!(:public_body) { FactoryBot.create(:public_body) }
+
+      before { public_body.not_many_public_requests_size = 2 }
+
+      it 'adds the not many requests tag' do
+        subject
+        expect(public_body).to be_tagged('not_many_requests')
+      end
+    end
+
+    context 'when a request email is removed' do
+      let!(:public_body) { FactoryBot.create(:public_body) }
+
+      before { public_body.not_many_public_requests_size = 2 }
+
+      before do
+        FactoryBot.create_list(:info_request, 3, public_body: public_body)
+      end
+
+      it 'removes the not many requests tag' do
+        subject
+        expect(public_body).not_to be_tagged('not_many_requests')
+      end
     end
   end
 end

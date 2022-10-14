@@ -61,6 +61,9 @@ class PublicBody < ApplicationRecord
     ]
   end
 
+  # Set to 0 to prevent application of the not_many_requests tag
+  cattr_accessor :not_many_public_requests_size, default: 5
+
   has_many :info_requests,
            -> { order(created_at: :desc) },
            :inverse_of => :public_body
@@ -113,7 +116,7 @@ class PublicBody < ApplicationRecord
 
   before_save :set_api_key!, :unless => :api_key
 
-  after_save :update_missing_email_tag
+  after_save :update_auto_applied_tags
 
   after_update :reindex_requested_from
 
@@ -927,6 +930,10 @@ class PublicBody < ApplicationRecord
     PublicBodyQuestion.fetch(self)
   end
 
+  def request_created
+    update_not_many_requests_tag
+  end
+
   private
 
   # If the url_name has changed, then all requested_from: queries will break
@@ -977,6 +984,11 @@ class PublicBody < ApplicationRecord
     result
   end
 
+  def update_auto_applied_tags
+    update_missing_email_tag
+    update_not_many_requests_tag
+  end
+
   def update_missing_email_tag
     if missing_email? && !defunct?
       add_tag_if_not_already_present('missing_email')
@@ -987,5 +999,13 @@ class PublicBody < ApplicationRecord
 
   def missing_email?
     !has_request_email?
+  end
+
+  def update_not_many_requests_tag
+    if info_requests.is_searchable.size < not_many_public_requests_size
+      add_tag_if_not_already_present('not_many_requests')
+    else
+      remove_tag('not_many_requests')
+    end
   end
 end

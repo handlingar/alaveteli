@@ -2,6 +2,9 @@
 
 ## Highlighted Features
 
+* Automatically apply `not_many_requests` tag to bodies who don't have many
+  public requests so that they can be found in a public list or have tag-based
+  notes applied (Gareth Rees)
 * Fix categorisation game total requests count (Gareth Rees)
 * Add count of requests in each prominence state to body and user admin pages
   (Gareth Rees)
@@ -36,6 +39,12 @@
   in one go, run the following from the app root directory:
 
       bin/rails runner "PublicBody.without_request_email.each(&:save)"
+
+* _Optional:_ Bodies with not many requests will automatically get tagged
+  `not_many_requests` as they are updated. If you want to automatically tag them
+  all in one go, run the following from the app root directory:
+
+      bin/rails runner "PublicBody.where('info_requests_visible_count < ?', PublicBody.not_many_public_requests_size).each(&:save)"
 
 * The crontab needs to be regenerated to include the new modifications:
   http://alaveteli.org/docs/installing/manual_install/#generate-crontab

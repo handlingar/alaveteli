@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe PublicBodyCSV do
-
+RSpec.describe PublicBodyCSV, not_many_requests_tag: false do
   describe '.default_fields' do
 
     it 'has a default set of fields' do
