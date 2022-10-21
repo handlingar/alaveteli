@@ -744,6 +744,10 @@ class InfoRequest < ApplicationRecord
     end
   end
 
+  def internally_reviewed?
+    outgoing_messages.where(what_doing: 'internal_review').any?
+  end
+
   def is_external?
     external_url.nil? ? false : true
   end
@@ -1021,7 +1025,10 @@ class InfoRequest < ApplicationRecord
   end
 
   def base_calculate_status
-    return 'waiting_classification' if awaiting_description
+    if awaiting_description
+      return 'internal_review' if internally_reviewed?
+      return 'waiting_classification'
+    end
     return described_state unless described_state == "waiting_response"
     # Compare by date, so only overdue on next day, not if 1 second late
     return 'waiting_response_very_overdue' if

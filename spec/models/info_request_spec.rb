@@ -1483,6 +1483,23 @@ RSpec.describe InfoRequest do
 
   end
 
+  describe '#internally_reviewed?' do
+    subject { info_request.internally_reviewed? }
+
+    context 'when internal review has been sent' do
+      let(:info_request) do
+        FactoryBot.create(:info_request, :with_internal_review_request)
+      end
+
+      it { is_expected.to eq true }
+    end
+
+    context 'when internal review has not been sent' do
+      let(:info_request) { FactoryBot.create(:info_request) }
+      it { is_expected.to eq false }
+    end
+  end
+
   describe '#is_external?' do
 
     it 'returns true if there is an external url' do

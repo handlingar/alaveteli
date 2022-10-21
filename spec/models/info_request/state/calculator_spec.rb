@@ -195,11 +195,7 @@ RSpec.describe InfoRequest::State::Calculator do
       end
     end
 
-    context "when the request is in internal_review" do
-      before :each do
-        info_request.set_described_state("internal_review")
-      end
-
+    shared_examples 'internal_review' do
       context "and the user is the owner" do
         it "returns only two pending states" do
           transitions = calculator.transitions(
@@ -235,6 +231,25 @@ RSpec.describe InfoRequest::State::Calculator do
           expect(transitions[:pending]["internal_review"]).to eq expected
         end
       end
+    end
+
+    context "when the request is in internal_review" do
+      before :each do
+        info_request.set_described_state("internal_review")
+      end
+
+      include_examples 'internal_review'
+    end
+
+    context "when the request was in internal_review" do
+      let(:info_request) do
+        FactoryBot.create(
+          :info_request, :with_internal_review_request,
+          awaiting_description: true, described_state: 'waiting_response'
+        )
+      end
+
+      include_examples 'internal_review'
     end
 
     context "when the request is in an 'other' state" do
