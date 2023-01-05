@@ -1,3 +1,14 @@
+# develop
+
+## Highlighted Features
+
+* Remove Vagrant development boxes (Graeme Porteous)
+
+## Upgrade Notes
+
+* If you were using Vagrant development boxes these are now unsupported. Please
+  switch to using Docker. See: https://alaveteli.org/docs/installing/docker/
+
 # 0.43.1.0
 
 ## Highlighted Features
