@@ -1,0 +1,2 @@
+<% comment = Comment.find_by(id: event.params[:deleted_comment_id].to_i) %>
+had annotation deleted by administrator <strong><%= event.params[:editor] %></strong>.
