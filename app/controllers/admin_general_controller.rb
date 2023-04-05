@@ -100,7 +100,8 @@ class AdminGeneralController < AdminController
   def timeline
     # Recent events
     @events_title = get_events_title
-
+    @time_filters = time_filters
+    @event_types = event_types
 
     @events = WillPaginate::Collection.create((params[:page] or 1), 100) do |pager|
       # create a hash for each model type being returned
