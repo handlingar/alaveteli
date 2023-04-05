@@ -6,7 +6,7 @@
 
 class AdminGeneralController < AdminController
   include AdminGeneralHelper
-  
+
   def index
     # Tasks to do
     @requires_admin_requests = InfoRequest.
