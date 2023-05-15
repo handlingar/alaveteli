@@ -64,14 +64,15 @@ RSpec.describe AttachmentsController, type: :controller do
       File.delete(key_path)
     end
 
-    # This is a regression test for a bug where URLs of this form were causing 500 errors
-    # instead of 404s.
+    # This is a regression test for a bug where URLs of this form were causing
+    # 500 errors nstead of 404s.
     #
-    # (Note that in fact only the integer-prefix of the URL part is used, so there are
-    # *some* “ugly URLs containing a request id that isn't an integer” that actually return
-    # a 200 response. The point is that IDs of this sort were triggering an error in the
-    # error-handling path, causing the wrong sort of error response to be returned in the
-    # case where the integer prefix referred to the wrong request.)
+    # (Note that in fact only the integer-prefix of the URL part is used, so
+    # there are *some* “ugly URLs containing a request id that isn't an integer”
+    # that actually return a 200 response. The point is that IDs of this sort
+    # were triggering an error in the error-handling path, causing the wrong
+    # sort of error response to be returned in the case where the integer prefix
+    # referred to the wrong request.)
     #
     # https://github.com/mysociety/alaveteli/issues/351
     it "should return 404 for ugly URLs containing a request id that isn't an integer" do
@@ -268,13 +269,17 @@ RSpec.describe AttachmentsController, type: :controller do
   end
 
   describe 'GET show_as_html' do
-    let(:info_request) { FactoryBot.create(:info_request_with_incoming_attachments) }
+    let(:info_request) {
+      FactoryBot.create(:info_request_with_incoming_attachments)
+    }
 
     def get_html_attachment(params = {})
-      default_params = { incoming_message_id:                            info_request.incoming_messages.first.id,
-                         id: info_request.id,
-                         part: 2,
-                         file_name: 'interesting.pdf.html' }
+      default_params = {
+        incoming_message_id: info_request.incoming_messages.first.id,
+        id: info_request.id,
+        part: 2,
+        file_name: 'interesting.pdf.html'
+      }
       get :show_as_html, params: default_params.merge(params)
     end
 
