@@ -32,7 +32,9 @@ RSpec.describe AlaveteliPro::InfoRequestsController do
         get :index
         expect(assigns[:request_summaries].size).to eq 2
         expect(assigns[:request_summaries]).
-          to match_array [info_request.request_summary, foo_request.request_summary]
+          to match_array [
+            info_request.request_summary, foo_request.request_summary
+          ]
       end
     end
 
