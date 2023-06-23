@@ -73,15 +73,15 @@ FactoryBot.define do
     end
 
     factory :incoming_message_with_attachments do
-      # foi_attachments_count is declared as an ignored attribute and available in
-      # attributes on the factory, as well as the callback via the evaluator
+      # foi_attachments_count is declared as an ignored attribute and available
+      # in attributes on the factory, as well as the callback via the evaluator
       transient do
         foi_attachments_count { 2 }
       end
 
-      # the after(:build) yields two values; the incoming_message instance itself and the
-      # evaluator, which stores all values from the factory, including ignored
-      # attributes;
+      # the after(:build) yields two values; the incoming_message instance
+      # itself and the evaluator, which stores all values from the factory,
+      # including ignored attributes;
       after(:build) do |incoming_message, evaluator|
         evaluator.foi_attachments_count.times do |count|
           incoming_message.foi_attachments << build(

@@ -3,35 +3,35 @@
 #
 # Table name: info_requests
 #
-#  id                                    :integer          not null, primary key
-#  title                                 :text             not null
+#  id                                    :integer   not null, primary key
+#  title                                 :text      not null
 #  user_id                               :integer
-#  public_body_id                        :integer          not null
-#  created_at                            :datetime         not null
-#  updated_at                            :datetime         not null
-#  described_state                       :string           not null
-#  awaiting_description                  :boolean          default(FALSE), not null
-#  prominence                            :string           default("normal"), not null
-#  url_title                             :text             not null
-#  law_used                              :string           default("foi"), not null
-#  allow_new_responses_from              :string           default("anybody"), not null
-#  handle_rejected_responses             :string           default("bounce"), not null
-#  idhash                                :string           not null
+#  public_body_id                        :integer   not null
+#  created_at                            :datetime  not null
+#  updated_at                            :datetime  not null
+#  described_state                       :string    not null
+#  awaiting_description                  :boolean   default(FALSE), not null
+#  prominence                            :string    default("normal"), not null
+#  url_title                             :text      not null
+#  law_used                              :string    default("foi"), not null
+#  allow_new_responses_from              :string    default("anybody"), not null
+#  handle_rejected_responses             :string    default("bounce"), not null
+#  idhash                                :string    not null
 #  external_user_name                    :string
 #  external_url                          :string
-#  attention_requested                   :boolean          default(FALSE)
-#  comments_allowed                      :boolean          default(TRUE), not null
+#  attention_requested                   :boolean   default(FALSE)
+#  comments_allowed                      :boolean   default(TRUE), not null
 #  info_request_batch_id                 :integer
 #  last_public_response_at               :datetime
-#  reject_incoming_at_mta                :boolean          default(FALSE), not null
-#  rejected_incoming_count               :integer          default(0)
+#  reject_incoming_at_mta                :boolean   default(FALSE), not null
+#  rejected_incoming_count               :integer   default(0)
 #  date_initial_request_last_sent_at     :date
 #  date_response_required_by             :date
 #  date_very_overdue_after               :date
 #  last_event_forming_initial_request_id :integer
 #  use_notifications                     :boolean
 #  last_event_time                       :datetime
-#  incoming_messages_count               :integer          default(0)
+#  incoming_messages_count               :integer   default(0)
 #  public_token                          :string
 #  prominence_reason                     :text
 #
@@ -165,7 +165,8 @@ FactoryBot.define do
 
     trait :with_internal_review_request do
       after(:create) do |info_request, _evaluator|
-        outgoing_message = create(:internal_review_request, info_request: info_request)
+        outgoing_message = create(:internal_review_request,
+                                  info_request: info_request)
       end
     end
 
@@ -273,7 +274,8 @@ FactoryBot.define do
     end
 
     factory :info_request_with_incoming, traits: [:with_incoming] do
-      factory :waiting_clarification_info_request, traits: [:waiting_clarification]
+      factory :waiting_clarification_info_request,
+              traits: [:waiting_clarification]
       factory :successful_request, traits: [:successful]
       factory :requires_admin_request, traits: [:requires_admin]
       factory :error_message_request, traits: [:error_message]
@@ -283,15 +285,20 @@ FactoryBot.define do
     end
 
     factory :info_request_with_plain_incoming, traits: [:with_plain_incoming]
-    factory :info_request_with_html_attachment, traits: [:with_incoming_with_html_attachment]
-    factory :info_request_with_incoming_attachments, traits: [:with_incoming_with_attachments]
-    factory :info_request_with_internal_review_request, traits: [:with_internal_review_request]
-    factory :embargoed_request, traits: [:embargoed, :with_incoming_with_attachments]
+    factory :info_request_with_html_attachment,
+            traits: [:with_incoming_with_html_attachment]
+    factory :info_request_with_incoming_attachments,
+            traits: [:with_incoming_with_attachments]
+    factory :info_request_with_internal_review_request,
+            traits: [:with_internal_review_request]
+    factory :embargoed_request,
+            traits: [:embargoed, :with_incoming_with_attachments]
     factory :embargo_expiring_request, traits: [:embargo_expiring]
     factory :re_embargoed_request, traits: [:re_embargoed]
     factory :embargo_expired_request, traits: [:embargo_expired]
     factory :external_request, traits: [:external]
-    factory :old_unclassified_request, traits: [:with_old_incoming, :awaiting_description]
+    factory :old_unclassified_request,
+            traits: [:with_old_incoming, :awaiting_description]
     factory :awaiting_description, traits: [:awaiting_description]
     factory :hidden_request, traits: [:hidden]
     factory :backpage_request, traits: [:backpage]
