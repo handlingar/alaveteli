@@ -159,6 +159,10 @@ class User < ApplicationRecord
            inverse_of: :user,
            dependent: :destroy
 
+  has_one :account_closure_request,
+          inverse_of: :user,
+          dependent: :destroy
+
   scope :active, -> { not_banned.not_closed }
   scope :banned, -> { where.not(ban_text: '') }
   scope :not_banned, -> { where(ban_text: '') }
