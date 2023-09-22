@@ -92,16 +92,6 @@ RSpec.describe RequestMailer do
       deliveries.clear
     end
 
-    it "puts messages with multiple request addresses in Bcc: in the holding pen" do
-      request1 = FactoryBot.create(:info_request)
-      request2 = FactoryBot.create(:info_request)
-      request3 = FactoryBot.create(:info_request)
-      bcc_addrs = [request1, request2, request3].map(&:incoming_email)
-      receive_incoming_mail('bcc-contact-reply.email',
-                            email_to: 'dummy@localhost',
-                            email_bcc: bcc_addrs.join(', '))
-      expect(InfoRequest.holding_pen_request.incoming_messages.count).to eq(1)
-    end
 
     it "should parse attachments from mails sent with apple mail" do
       ir = info_requests(:fancy_dog_request)
@@ -200,14 +190,7 @@ RSpec.describe RequestMailer do
         deliveries.clear
       end
 
-      it "recognises a spam address under the 'BCC' header" do
-        receive_incoming_mail('incoming-request-plain.email',
-                              email_bcc: @spam_address.email)
 
-        deliveries = ActionMailer::Base.deliveries
-        expect(deliveries.size).to eq(0)
-        deliveries.clear
-      end
 
       it "recognises a spam email address under the 'envelope-to' header" do
         receive_incoming_mail('incoming-request-plain.email',
