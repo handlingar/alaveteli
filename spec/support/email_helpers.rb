@@ -11,7 +11,7 @@ def receive_incoming_mail(email_name_or_string, **kargs)
   content = load_file_fixture(email_name_or_string) || email_name_or_string
   content = gsub_addresses(content, **kargs)
   content = ::Mail::Utilities.binary_unsafe_to_crlf(content)
-  RequestMailer.receive(content)
+  RequestMailer.receive(MailHandler.mail_from_raw_email(content))
 end
 
 def get_fixture_mail(filename, email_to = nil, email_from = nil)
