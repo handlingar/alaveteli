@@ -1567,6 +1567,27 @@ RSpec.describe InfoRequest do
 
   end
 
+  describe '#already_received?' do
+    it 'returns true if a message with the same Message-ID has already been received' do
+      info_request = FactoryBot.create(:info_request)
+      # Send the email
+      raw_email_data = <<-EOF.strip_heredoc
+      From: EMAIL_FROM
+      To: EMAIL_TO
+      Message-ID: abcdefg@example.com
+      Subject: Basic Email
+      Hello, World
+      EOF
+      email, raw_email = email_and_raw_email(raw_email: raw_email_data)
+
+      info_request.receive(email, raw_email)
+      expect(info_request.incoming_messages.count).to eq(1)
+
+      # Check to see if the email has already been received
+      expect(info_request.already_received?(email)).to eq(true)
+    end
+  end
+
   describe '#is_external?' do
 
     it 'returns true if there is an external url' do

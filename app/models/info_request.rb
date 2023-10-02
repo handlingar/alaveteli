@@ -901,15 +901,11 @@ class InfoRequest < ApplicationRecord
   end
 
   # Has this email already been received here? Based just on message id.
-  def already_received?(email, _raw_email_data)
+  def already_received?(email)
     message_id = email.message_id
     raise "No message id for this message" if message_id.nil?
 
-    incoming_messages.each do |im|
-      return true if message_id == im.message_id
-    end
-
-    false
+    incoming_messages.any? { message_id == _1.message_id }
   end
 
   def receive(email, raw_email_data, *args)
