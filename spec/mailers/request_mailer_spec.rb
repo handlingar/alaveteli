@@ -43,6 +43,42 @@ RSpec.describe RequestMailer do
       deliveries.clear
     end
 
+    it "should append the email to each exact request address, unless that request has already received the email" do
+      ir = info_requests(:fancy_dog_request)
+      raw_email_data = <<-EOF.strip_heredoc
+      From: EMAIL_FROM
+      To: EMAIL_TO
+      Message-ID: abcdefg@example.com
+      Subject: Basic Email
+      Hello, World
+      EOF
+      expect(ir.incoming_messages.count).to eq(1) # in the fixture
+      receive_incoming_mail(
+      raw_email_data,
+      email_to: ir.incoming_email
+      )
+      expect(ir.incoming_messages.count).to eq(2) # one more arrives
+      # send the email again
+      receive_incoming_mail(
+        raw_email_data,
+        email_to: ir.incoming_email
+      )
+      expect(ir.incoming_messages.count).to eq(2) # this shouldn't add to the number of incoming mails
+      # send an email with a new Message-ID
+      raw_email_data = <<-EOF.strip_heredoc
+      From: EMAIL_FROM
+      To: EMAIL_TO
+      Message-ID: ab@example.com
+      Subject: Basic Email
+      Hello, World
+      EOF
+      receive_incoming_mail(
+        raw_email_data,
+        email_to: ir.incoming_email
+      )
+      expect(ir.incoming_messages.count).to eq(3) # this should add to the number of incoming mails
+    end
+
     it "should store mail in holding pen and send to admin when the email is not to any information request" do
       ir = info_requests(:fancy_dog_request)
       expect(ir.incoming_messages.count).to eq(1)

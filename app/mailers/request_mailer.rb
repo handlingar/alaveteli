@@ -257,24 +257,26 @@ class RequestMailer < ApplicationMailer
       guessed_info_requests = Guess.guessed_info_requests(email)
     end
 
-    # If there is only one info request matching mail, it gets attached to the
-    # request to be archived with it
-    if exact_info_requests.count == 1 || guessed_info_requests.count == 1
-      info_request = exact_info_requests.first || guessed_info_requests.first
-
-      if exact_info_requests.empty? && guessed_info_requests.count == 1
-        info_request.log_event(
-          'redeliver_incoming',
-          editor: 'automatic',
-          destination_request: info_request
-        )
+    # Go through each exact info request
+    if exact_info_requests.count > 0
+      exact_info_requests.each do |ir|
+        unless ir.already_received?(email)
+          ir.receive(email, raw_email, opts)
+        end
       end
-
+    # If there are no exact requests, and there is one guess, send that and log
+    # it as an event
+    elsif guessed_info_requests.count == 1
+      info_request = guessed_info_requests.first
+      info_request.log_event(
+        'redeliver_incoming',
+        editor: 'automatic',
+        destination_request: info_request
+      )
       info_request.receive(email, raw_email, opts)
 
     else
-      # Otherwise, if there are no matching IRs, multiple IRs, or multiple IR
-      # guesses, we send the mail to the holding pen
+      # Otherwise we send the mail to the holding pen
       send_to_holding_pen(email, raw_email, opts)
     end
   end
