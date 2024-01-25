@@ -36,7 +36,7 @@ SITE_NAME: 'Alaveteli'
 #   DOMAIN: 'www.example.com'
 #
 # ---
-DOMAIN: 'www.example.org'
+DOMAIN: 'localhost:3000'
 
 # If true forces everyone (in the production environment) to use encrypted
 # connections (via https) by redirecting unencrypted connections. This is
