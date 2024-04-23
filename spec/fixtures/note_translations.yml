@@ -61,3 +61,43 @@ humpadink_he_IL_note_translation:
   body: An albatross told me!!!
   created_at: 2007-10-24 10:51:01.161639
   updated_at: 2007-10-24 10:51:01.161639
+
+geraldine_sv_note_translation:
+  id: 101
+  note_id: 2
+  locale: sv
+  body:
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+humpadink_sv_note_translation:
+  id: 102
+  note_id: 3
+  locale: sv
+  body: An albatross told me!!!
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+silly_walks_sv_note_translation:
+  id: 103
+  note_id: 5
+  locale: sv
+  body: You know the one.
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+sensible_walks_sv_note_translation:
+  id: 104
+  note_id: 6
+  locale: sv
+  body: I bet you’ve never heard of it.
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+other_sv_note_translation:
+  id: 105
+  note_id: 7
+  locale: sv
+  body: More notes
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639

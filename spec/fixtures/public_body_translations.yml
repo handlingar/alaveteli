@@ -123,3 +123,87 @@ humpadink_he_IL_public_body_translation:
   disclosure_log: ""
   created_at: 2007-10-24 10:51:01.161639
   updated_at: 2007-10-24 10:51:01.161639
+
+geraldine_sv_public_body_translation:
+  name: Geraldine Quango
+  first_letter: G
+  request_email: geraldine-requests@localhost
+  id: 101
+  public_body_id: 2
+  short_name: TGQ
+  url_name: tgq
+  locale: sv
+  publication_scheme: ""
+  disclosure_log: ""
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+humpadink_sv_public_body_translation:
+  name: "Department for Humpadinking"
+  first_letter: D
+  request_email: humpadink-requests@localhost
+  id: 102
+  public_body_id: 3
+  short_name: DfH
+  url_name: dfh
+  locale: sv
+  publication_scheme: ""
+  disclosure_log: ""
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+forlorn_sv_public_body_translation:
+  name: "Department of Loneliness"
+  first_letter: D
+  request_email: forlorn-requests@localhost
+  id: 103
+  public_body_id: 4
+  short_name: DoL
+  url_name: lonely
+  locale: sv
+  publication_scheme: ""
+  disclosure_log: ""
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+silly_walks_sv_public_body_translation:
+  id: 104
+  public_body_id: 5
+  locale: sv
+  name: "Ministry of Silly Walks"
+  first_letter: M
+  request_email: silly-walks-requests@localhost
+  short_name: MSW
+  url_name: msw
+  publication_scheme: ""
+  disclosure_log: ""
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+sensible_walks_sv_public_body_translation:
+  id: 105
+  public_body_id: 6
+  locale: sv
+  name: "Ministry of Sensible Walks"
+  first_letter: M
+  request_email: sensible-walks-requests@localhost
+  short_name: SenseWalk
+  url_name: sensible_walks
+  publication_scheme: ""
+  disclosure_log: ""
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
+
+other_sv_public_body_translation:
+  id: 106
+  public_body_id: 7
+  locale: sv
+  name: "Another Public Body"
+  first_letter: A
+  request_email: other@localhost
+  short_name: Another Public Body
+  url_name: another_public_body
+  publication_scheme: ""
+  disclosure_log: ""
+  created_at: 2024-04-23 10:51:01.161639
+  updated_at: 2024-04-23 10:51:01.161639
