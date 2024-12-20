@@ -134,7 +134,7 @@ class UserController < ApplicationController
     # Make the user and try to save it
     @user_signup = User.new(user_params(:user_signup))
     error = false
-    if @request_from_foreign_country && !verify_recaptcha
+    if !verify_recaptcha
       flash.now[:error] = _('There was an error with the reCAPTCHA. ' \
                               'Please try again.')
       error = true
